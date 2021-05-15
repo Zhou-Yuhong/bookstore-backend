@@ -72,4 +72,12 @@ public class LoginController {
             return MsgUtil.makeMsg(MsgCode.SUCCESS, MsgUtil.LOGIN_SUCCESS_MSG, auth);
         }
     }
+    @RequestMapping("/register")
+    public Msg register(@RequestBody Map<String,String> params){
+        String username=params.get(Constant.USERNAME);
+        String password=params.get(Constant.PASSWORD);
+        userService.register(username,password);
+        //试试先传回去error，还未登录
+        return MsgUtil.makeMsg(MsgCode.LOGIN_USER_ERROR);
+    }
 }

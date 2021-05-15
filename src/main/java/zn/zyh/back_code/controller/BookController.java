@@ -22,11 +22,7 @@ public class BookController {
     @RequestMapping("/getBooks")
     public List<Book> getBooks(@RequestBody Map<String, String> params) {
         List<Book> result=bookService.getBooks();
-        for(int i=0;i<result.size();i++){
-            System.out.print(result.get(i).getName()+"\n");
-        }
-//       String json= JSONArray.fromObject(result).toString();
-//        System.out.print(json);
+
         return result;
     }
 

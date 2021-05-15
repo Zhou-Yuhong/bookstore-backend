@@ -11,6 +11,7 @@ public class UserDaoImpl implements UserDao {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+    @Override
     public UserAuth checkUser(String name,String pwd){
         UserAuth result;
         String sql="SELECT * FROM user_auth WHERE username=? and password=?";
@@ -23,6 +24,11 @@ public class UserDaoImpl implements UserDao {
                 new Object[]{name,pwd});
 
         return result;
+    }
+    @Override
+    public void register(String username,String password){
+         String sql= "INSERT INTO `user_auth` (`username`,`password`,`user_type`) VALUES(?,?,?);";
+         jdbcTemplate.update(sql,username,password,0);
     }
 
 }
