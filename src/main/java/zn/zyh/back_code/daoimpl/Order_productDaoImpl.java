@@ -21,21 +21,17 @@ public class Order_productDaoImpl implements Order_productDao {
                 (rs,rowNum)->new Order_product(
                  rs.getInt("product_id"),
                         rs.getInt("order_id"),
-                        rs.getString("name"),
-                        rs.getInt("num"),
-                        rs.getInt("price"),
-                        rs.getString("image"),
-                        rs.getString("author")
+                        rs.getInt("num")
                 ),new Object[]{orderid}
         ).forEach(order_product -> order_products.add(order_product));
         return order_products;
     }
     @Override
     public void addProducts(List<Order_product> order_products,int orderid){
-        String sql="INSERT INTO `order_product`(`product_id`,`order_id`,`name`,`num`,`price`,`image`,`author`) VALUES (?,?,?,?,?,?,?)";
+        String sql="INSERT INTO `order_product`(`product_id`,`order_id`,`num`) VALUES (?,?,?)";
         for(int i=0;i<order_products.size();i++){
             Order_product tmp=order_products.get(i);
-            jdbcTemplate.update(sql,tmp.getProduct_id(),orderid,tmp.getName(),tmp.getNum(),tmp.getPrice(),tmp.getImage(),tmp.getAuthor());
+            jdbcTemplate.update(sql,tmp.getProduct_id(),orderid,tmp.getNum());
         }
     }
 }

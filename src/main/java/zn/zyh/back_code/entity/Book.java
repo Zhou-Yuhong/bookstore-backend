@@ -32,7 +32,9 @@ public class Book {
         this.inventory=inventory;
         this.image=image;
     }
-
+    public void setInventory(Integer inventory){
+        this.inventory=inventory;
+    }
     public String getName() {
         return name;
     }

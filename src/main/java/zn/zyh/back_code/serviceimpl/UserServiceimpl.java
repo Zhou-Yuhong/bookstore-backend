@@ -19,4 +19,5 @@ public class UserServiceimpl implements UserService {
     public void register(String username,String password){
         userDao.register(username,password);
     }
+
 }
