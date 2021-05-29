@@ -6,9 +6,11 @@ import zn.zyh.back_code.dao.BookDao;
 import zn.zyh.back_code.entity.Book;
 import zn.zyh.back_code.service.BookService;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class BookServiceImpl implements BookService {
     @Autowired
     private BookDao bookDao;
@@ -24,5 +26,9 @@ public class BookServiceImpl implements BookService {
     @Override
     public boolean reduceStocks(Integer id,Integer num){
         return bookDao.reduceStocks(id,num);
+    }
+    @Override
+    public void updateInventory(int inventory,int id){
+        bookDao.updateInventory(inventory,id);
     }
 }

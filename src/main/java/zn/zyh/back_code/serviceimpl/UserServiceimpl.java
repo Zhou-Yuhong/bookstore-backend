@@ -6,7 +6,10 @@ import zn.zyh.back_code.dao.UserDao;
 import zn.zyh.back_code.entity.UserAuth;
 import zn.zyh.back_code.service.UserService;
 
+import javax.transaction.Transactional;
+
 @Service
+@Transactional
 public class UserServiceimpl implements UserService {
     @Autowired
     private UserDao userDao;

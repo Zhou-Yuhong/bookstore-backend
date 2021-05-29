@@ -5,30 +5,22 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import zn.zyh.back_code.dao.UserDao;
 import zn.zyh.back_code.entity.UserAuth;
+import zn.zyh.back_code.repository.UserAuthRepository;
 
 @Repository
 public class UserDaoImpl implements UserDao {
 
-    @Autowired
-    JdbcTemplate jdbcTemplate;
-    @Override
-    public UserAuth checkUser(String name,String pwd){
-        UserAuth result;
-        String sql="SELECT * FROM user_auth WHERE username=? and password=?";
-        result=jdbcTemplate.queryForObject(sql,
-                (rs, rowNum) ->new UserAuth(
-                        rs.getInt("user_id"),
-                        rs.getString("username"),
-                        rs.getString("password"),
-                        rs.getInt("user_type")),
-                new Object[]{name,pwd});
 
-        return result;
-    }
-    @Override
+@Autowired
+UserAuthRepository userAuthRepository;
+
+@Override
+    public UserAuth checkUser(String username,String password){
+    return userAuthRepository.checkUser(username,password);
+}
+@Override
     public void register(String username,String password){
-         String sql= "INSERT INTO `user_auth` (`username`,`password`,`user_type`) VALUES(?,?,?);";
-         jdbcTemplate.update(sql,username,password,0);
-    }
-
+       UserAuth userAuth=new UserAuth(username,password);
+       userAuthRepository.save(userAuth);
+}
 }

@@ -9,4 +9,5 @@ public interface BookService {
     List<Book> getBooks();
     //减少库存
     boolean reduceStocks(Integer id,Integer num);
+    void updateInventory(int inventory,int id);
 }

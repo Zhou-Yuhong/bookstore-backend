@@ -33,7 +33,7 @@ public class LoginController {
         if(auth!=null){
             System.out.print(auth.getUsername());
             JSONObject obj=new JSONObject();
-            obj.put (Constant.USER_ID,auth.getUserID());
+            obj.put (Constant.USER_ID,auth.getUserId());
             obj.put(Constant.USERNAME,auth.getUsername());
             obj.put(Constant.USER_TYPE,auth.getUserType());
             SessionUtil.setSession(obj);

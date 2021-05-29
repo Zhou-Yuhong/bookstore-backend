@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface OrderService {
     //返回所有订单
-    List<Order_wrap> getOrder_wrapsByUsername(String username);
+    List<Order_wrap> getOrder_wrapsByUserid(int userid);
     void addOrder_wrap(Order_wrap order_wrap);
 }

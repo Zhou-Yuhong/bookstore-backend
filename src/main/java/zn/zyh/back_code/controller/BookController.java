@@ -2,6 +2,7 @@ package zn.zyh.back_code.controller;
 
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,7 @@ public class BookController {
 
     @RequestMapping("/getBook")
     public Book getBook(@RequestParam("id") Integer id){
-        return bookService.findBookById(id);
+        Book book= bookService.findBookById(id);
+        return book;
     }
 }

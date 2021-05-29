@@ -1,27 +1,28 @@
 package zn.zyh.back_code.entity;
 
+import lombok.Data;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
+@Data
 @Entity
 @Table(name="userAuth")
 public class UserAuth {
+    @Id
+    @Column(name="user_id")
     private Integer userId;
     private String username;
     private String password;
     private Integer userType;
-    public UserAuth(Integer id,String name,String pwd,Integer type)
-    {
-        userId=id;
-        username=name;
-        password=pwd;
-        userType=type;
+    public UserAuth(String username,String password){
+        this.username=username;
+        this.password=password;
+        this.userType=0;
     }
+    public UserAuth(){
 
-    public String getUsername()
-    {
-        return username;
     }
-    public Integer getUserType(){return userType;}
-    public Integer getUserID(){return userId;}
 }
