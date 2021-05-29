@@ -17,6 +17,7 @@ import zn.zyh.back_code.service.BookService;
 import zn.zyh.back_code.service.OrderService;
 import zn.zyh.back_code.utils.objectutils.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +44,8 @@ public class OrderController {
         int userid=order_info.getInt("userid");
         String order_time=order_info.getString("order_time");
         int num=order_info.getInt("num");
-        double value= order_info.getDouble("value");
+        String S_value= order_info.getString("value");
+        BigDecimal value=new BigDecimal(S_value);
         int state=order_info.getInt("state");
         //这里的id也不重要
         Order_info orderInfo=new Order_info(userid,order_time,num,value,state);

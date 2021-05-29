@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Data
 @Entity
@@ -21,7 +22,7 @@ public class Book {
     private String name;
     private String type;
     private String author;
-    private Double price;
+    private BigDecimal price;
     private String description;
     private Integer inventory;
     private String image;

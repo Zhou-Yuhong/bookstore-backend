@@ -19,8 +19,8 @@ UserAuthRepository userAuthRepository;
     return userAuthRepository.checkUser(username,password);
 }
 @Override
-    public void register(String username,String password){
+    public UserAuth register(String username,String password){
        UserAuth userAuth=new UserAuth(username,password);
-       userAuthRepository.save(userAuth);
+       return userAuthRepository.saveAndFlush(userAuth);
 }
 }

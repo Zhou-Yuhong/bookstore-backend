@@ -19,8 +19,8 @@ public class UserServiceimpl implements UserService {
         return userDao.checkUser(username, password);
     }
     @Override
-    public void register(String username,String password){
-        userDao.register(username,password);
+    public UserAuth register(String username,String password){
+        return userDao.register(username,password);
     }
 
 }

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Data
 @Entity
@@ -22,7 +23,7 @@ public class Order_info {
     //订单包含的商品种类数目
     private int num;
     //订单总价值
-    private double value;
+    private BigDecimal value;
     //顶单状态
     private int state;
 
@@ -45,7 +46,7 @@ public class Order_info {
 //    public int getState(){
 //        return state;
 //    }
-    public Order_info( int  userid, String order_time,int num,double value,int state){
+    public Order_info( int  userid, String order_time,int num,BigDecimal value,int state){
         this.userid=userid;
         this.order_time=order_time;
         this.num=num;
