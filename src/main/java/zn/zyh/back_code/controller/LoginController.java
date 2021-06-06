@@ -30,7 +30,7 @@ public class LoginController {
 //        System.out.print("username  "+username);
 //        System.out.print("password  "+password+"\n");
         UserAuth auth=userService.checkUser(username,password);
-        if(auth!=null){
+        if(auth!=null&&auth.getUserstate()==0){
             System.out.print(auth.getUsername());
             JSONObject obj=new JSONObject();
             obj.put (Constant.USER_ID,auth.getUserId());

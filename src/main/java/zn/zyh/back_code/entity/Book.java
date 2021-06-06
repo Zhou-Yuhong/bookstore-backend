@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
 public class Book {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="id",unique = true,nullable = false)
     private int id;
 
@@ -26,19 +26,19 @@ public class Book {
     private String description;
     private Integer inventory;
     private String image;
-//    public Book(){
-//    };
-//    public Book( int id, String isbn, String name, String type, String author, Double price, String description,Integer inventory, String image){
-//        this.id=id;
-//        this.isbn=isbn;
-//        this.name=name;
-//        this.type=type;
-//        this.author=author;
-//        this.price=price;
-//        this.description=description;
-//        this.inventory=inventory;
-//        this.image=image;
-//    }
+    public Book(){
+    };
+    public Book( int id, String isbn, String name, String type, String author, BigDecimal price, String description,Integer inventory, String image){
+        this.id=id;
+        this.isbn=isbn;
+        this.name=name;
+        this.type=type;
+        this.author=author;
+        this.price=price;
+        this.description=description;
+        this.inventory=inventory;
+        this.image=image;
+    }
 //    public void setInventory(Integer inventory){
 //        this.inventory=inventory;
 //    }

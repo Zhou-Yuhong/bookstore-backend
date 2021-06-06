@@ -31,4 +31,19 @@ public class BookServiceImpl implements BookService {
     public void updateInventory(int inventory,int id){
         bookDao.updateInventory(inventory,id);
     }
+
+    @Override
+    public void deleteBooks(List<Book> books){
+        bookDao.deleteBooks(books);
+    }
+
+    @Override
+    public void addBooks(List<Book> books){
+       bookDao.addBooks(books);
+    }
+
+    @Override
+    public void updateBooks(List<Book> books){
+       bookDao.updateBooks(books);
+    }
 }

@@ -40,4 +40,34 @@ public class BookDaoImpl implements BookDao {
         bookRepository.updateInventory(inventory,id);
     }
 
+    @Override
+    public void deleteBooks(List<Book> books){
+        for(int i=0;i<books.size();i++){
+            bookRepository.deleteById(books.get(i).getId());
+            bookRepository.flush();
+        }
+    }
+    @Override
+    public void addBooks(List<Book> books){
+        for(int i=0;i<books.size();i++){
+            bookRepository.saveAndFlush(books.get(i));
+        }
+    }
+
+    @Override
+    public void updateBooks(List<Book> books){
+        for(int i=0;i<books.size();i++){
+            Book book=bookRepository.getOne(books.get(i).getId());
+            book.setType(books.get(i).getType());
+            book.setAuthor(books.get(i).getAuthor());
+            book.setName(books.get(i).getName());
+            book.setDescription(books.get(i).getDescription());
+            book.setPrice(books.get(i).getPrice());
+            book.setInventory(books.get(i).getInventory());
+            book.setIsbn(books.get(i).getIsbn());
+            book.setImage(books.get(i).getImage());
+            bookRepository.save(book);
+            bookRepository.flush();
+        }
+    }
 }

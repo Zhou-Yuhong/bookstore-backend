@@ -7,6 +7,8 @@ import zn.zyh.back_code.dao.UserDao;
 import zn.zyh.back_code.entity.UserAuth;
 import zn.zyh.back_code.repository.UserAuthRepository;
 
+import java.util.List;
+
 @Repository
 public class UserDaoImpl implements UserDao {
 
@@ -22,5 +24,9 @@ UserAuthRepository userAuthRepository;
     public UserAuth register(String username,String password){
        UserAuth userAuth=new UserAuth(username,password);
        return userAuthRepository.saveAndFlush(userAuth);
+}
+@Override
+    public List<UserAuth> getUsers(){
+       return userAuthRepository.getUsers();
 }
 }

@@ -11,4 +11,10 @@ public interface BookDao {
     List<Book> getBooks();
     boolean reduceStocks(Integer id, Integer num);
     void updateInventory(int inventory,int id);
+
+    void deleteBooks(List<Book> books);
+
+    void addBooks(List<Book> books);
+
+    void updateBooks(List<Book> books);
 }

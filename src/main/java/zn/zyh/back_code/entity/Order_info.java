@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
 public class Order_info {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="id",unique = true,nullable = false)
     private int id;
     //下订单的用户名

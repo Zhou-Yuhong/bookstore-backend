@@ -7,6 +7,7 @@ import zn.zyh.back_code.entity.UserAuth;
 import zn.zyh.back_code.service.UserService;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -23,4 +24,8 @@ public class UserServiceimpl implements UserService {
         return userDao.register(username,password);
     }
 
+    @Override
+    public List<UserAuth> getUsers(){
+        return userDao.getUsers();
+    }
 }

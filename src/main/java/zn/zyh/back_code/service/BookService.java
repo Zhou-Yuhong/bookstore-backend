@@ -10,4 +10,13 @@ public interface BookService {
     //减少库存
     boolean reduceStocks(Integer id,Integer num);
     void updateInventory(int inventory,int id);
+
+    //删除书籍
+    void deleteBooks(List<Book> books);
+
+    //增加书籍
+    void addBooks(List<Book> books);
+
+    //更新书籍
+    void updateBooks(List<Book> books);
 }
