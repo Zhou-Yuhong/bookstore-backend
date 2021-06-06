@@ -9,4 +9,8 @@ public interface UserDao {
     UserAuth register(String username,String password);
 
     List<UserAuth> getUsers();
+
+    void disableUsers(Integer keyset[]);
+
+    void enableUsers(Integer keyset[]);
 }

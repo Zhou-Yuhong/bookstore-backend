@@ -29,4 +29,20 @@ UserAuthRepository userAuthRepository;
     public List<UserAuth> getUsers(){
        return userAuthRepository.getUsers();
 }
+@Override
+    public void disableUsers(Integer keyset[]){
+     for(int i=0;i< keyset.length;i++){
+         UserAuth user=userAuthRepository.getOne(keyset[i]);
+         user.setUserstate(1);
+         userAuthRepository.saveAndFlush(user);
+     }
+}
+@Override
+    public void enableUsers(Integer keyset[]){
+    for(int i=0;i<keyset.length;i++){
+        UserAuth user=userAuthRepository.getOne(keyset[i]);
+        user.setUserstate(0);
+        userAuthRepository.saveAndFlush(user);
+    }
+    }
 }

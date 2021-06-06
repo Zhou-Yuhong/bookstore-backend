@@ -28,4 +28,12 @@ public class UserServiceimpl implements UserService {
     public List<UserAuth> getUsers(){
         return userDao.getUsers();
     }
+    @Override
+    public void disableUsers(Integer keyset[]){
+         userDao.disableUsers(keyset);
+    }
+    @Override
+    public void enableUsers(Integer keyset[]){
+        userDao.enableUsers(keyset);
+    }
 }
