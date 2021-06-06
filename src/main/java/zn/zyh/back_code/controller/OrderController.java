@@ -64,4 +64,9 @@ public class OrderController {
         this.orderService.addOrder_wrap(order_wrap);
         return;
     }
+    @RequestMapping("/getAllOrders")
+    public List<Order_wrap> getAllOrders(@RequestBody Map<String, String> params){
+        List<Order_wrap> result=orderService.getAllOrders();
+        return result;
+    }
 }
