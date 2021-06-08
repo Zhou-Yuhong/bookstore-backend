@@ -41,4 +41,7 @@ public class Order_product_wrap {
         this.image="";
         this.author="";
     }
+    public BigDecimal getPrice(){
+        return this.price;
+    }
 }

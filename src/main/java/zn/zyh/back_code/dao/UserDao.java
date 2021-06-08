@@ -13,4 +13,6 @@ public interface UserDao {
     void disableUsers(Integer keyset[]);
 
     void enableUsers(Integer keyset[]);
+
+    UserAuth getUser(int userid);
 }

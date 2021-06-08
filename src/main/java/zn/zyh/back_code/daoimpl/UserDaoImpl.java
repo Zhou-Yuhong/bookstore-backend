@@ -45,4 +45,8 @@ UserAuthRepository userAuthRepository;
         userAuthRepository.saveAndFlush(user);
     }
     }
+    @Override
+     public UserAuth getUser(int userid){
+    return userAuthRepository.getOne(userid);
+    }
 }
