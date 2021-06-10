@@ -73,23 +73,26 @@ public class LoginController {
         }
     }
     @RequestMapping("/register")
-    public Msg register(@RequestBody Map<String,String> params){
+    public boolean register(@RequestBody Map<String,String> params){
         String username=params.get(Constant.USERNAME);
         String password=params.get(Constant.PASSWORD);
-        UserAuth newUser= userService.register(username,password);
-        //试试先传回去error，还未登录
-        JSONObject obj=new JSONObject();
-        obj.put (Constant.USER_ID,newUser.getUserId());
-        obj.put(Constant.USERNAME,newUser.getUsername());
-        obj.put(Constant.USER_TYPE,newUser.getUserType());
-        SessionUtil.setSession(obj);
-        //session
-        JSONObject auth2 = SessionUtil.getAuth();
-        System.out.print("session2"+auth2);
-        //session
-        JSONObject data = JSONObject.fromObject(newUser);
-        data.remove(Constant.PASSWORD);
+        String tel=params.get("tel");
+        String email=params.get("email");
+        String gender=params.get("gender");
+        return  userService.register(username,password,tel,email,gender);
 
-        return MsgUtil.makeMsg(MsgCode.SUCCESS, MsgUtil.LOGIN_SUCCESS_MSG, data);
+//        JSONObject obj=new JSONObject();
+//        obj.put (Constant.USER_ID,newUser.getUserId());
+//        obj.put(Constant.USERNAME,newUser.getUsername());
+//        obj.put(Constant.USER_TYPE,newUser.getUserType());
+//        SessionUtil.setSession(obj);
+//        //session
+//        JSONObject auth2 = SessionUtil.getAuth();
+//        System.out.print("session2"+auth2);
+//        //session
+//        JSONObject data = JSONObject.fromObject(newUser);
+//        data.remove(Constant.PASSWORD);
+//
+//        return MsgUtil.makeMsg(MsgCode.SUCCESS, MsgUtil.LOGIN_SUCCESS_MSG, data);
     }
 }

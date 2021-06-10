@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserDao {
     UserAuth checkUser(String username, String password);
-    UserAuth register(String username,String password);
+    Boolean register(String username,String password,String tel,String email,String gender);
 
     List<UserAuth> getUsers();
 

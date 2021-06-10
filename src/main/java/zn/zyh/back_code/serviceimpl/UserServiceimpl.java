@@ -20,8 +20,8 @@ public class UserServiceimpl implements UserService {
         return userDao.checkUser(username, password);
     }
     @Override
-    public UserAuth register(String username,String password){
-        return userDao.register(username,password);
+    public Boolean register(String username,String password,String tel,String email,String gender){
+        return userDao.register(username,password,tel,email,gender);
     }
 
     @Override

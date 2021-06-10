@@ -2,17 +2,16 @@ package zn.zyh.back_code.entity;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name="userAuth")
 public class UserAuth {
     @Id
-    @Column(name="user_id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="user_id",unique = true,nullable = false)
+
     private Integer userId;
     private String username;
     private String password;
@@ -22,6 +21,7 @@ public class UserAuth {
         this.username=username;
         this.password=password;
         this.userType=0;
+        this.userstate=0;
     }
     public UserAuth(){
 
