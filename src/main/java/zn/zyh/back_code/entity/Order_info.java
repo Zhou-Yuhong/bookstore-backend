@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @Entity
@@ -26,26 +27,12 @@ public class Order_info {
     private BigDecimal value;
     //顶单状态
     private int state;
-
-
-//    public int getId(){
-//        return id;
-//    }
-//    public String getUsername(){
-//        return username;
-//    }
-//    public String getOrder_time(){
-//        return order_time;
-//    }
-//    public int getNum(){
-//        return num;
-//    }
-//    public double getValue(){
-//        return value;
-//    }
-//    public int getState(){
-//        return state;
-//    }
+    @JsonIgnoreProperties({"order_info"})
+    @OneToMany(mappedBy = "order_id",cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
+    private List<Order_product> order_products;
+    @OneToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name="userid",referencedColumnName = "user_id",insertable = false,updatable = false)
+    private UserAuth userAuth;
     public Order_info( int  userid, String order_time,int num,BigDecimal value,int state){
         this.userid=userid;
         this.order_time=order_time;
@@ -54,5 +41,6 @@ public class Order_info {
         this.state=state;
     }
     public Order_info(){}
-//    public Order_info(){}
+
+
 }

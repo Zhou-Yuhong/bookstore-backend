@@ -10,10 +10,12 @@ import zn.zyh.back_code.entity.*;
 import zn.zyh.back_code.service.OrderService;
 import zn.zyh.back_code.utils.analysisutils.AnaUtil;
 
+import javax.persistence.criteria.Order;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -31,27 +33,18 @@ public class OredrServiceImpl implements OrderService {
        List<Order_info> orders=orderInfoDao.findByUserid(userid);
        List<Order_wrap> order_wraps=new ArrayList<>();
        for(int i=0;i<orders.size();i++){
-           Order_info order=orders.get(i);
-           //order_wraps.add(new Order_wrap(order,orderProductDao.getProducts(order.getId())));
-           List<Order_product> products=orderProductDao.getProducts(order.getId());
-           List<Order_product_wrap> product_wraps=new ArrayList<>();
-           for(int j=0;j<products.size();j++){
-              Book book=bookDao.findOne(products.get(j).getProduct_id());
-               Order_product_wrap tmp=new Order_product_wrap(products.get(j),book.getName(),book.getPrice(),book.getImage(),book.getAuthor());
-               product_wraps.add(tmp);
-           }
-           order_wraps.add(new Order_wrap(order,product_wraps));
+           order_wraps.add(new Order_wrap(orders.get(i)));
        }
        return order_wraps;
     }
-    //获得orderid对应的商品
+    //获得orderid对应的商品,包括商品数量以及各种信息
     @Override
     public List<Order_product_wrap> getProductsByOrderid(int orderid){
         List<Order_product_wrap> product_wraps=new ArrayList<>();
-        List<Order_product> products=orderProductDao.getProducts(orderid);
+        Order_info order=orderInfoDao.getOrder(orderid);
+        List<Order_product> products=order.getOrder_products();
         for(int j=0;j<products.size();j++){
-            Book book=bookDao.findOne(products.get(j).getProduct_id());
-            Order_product_wrap tmp=new Order_product_wrap(products.get(j),book.getName(),book.getPrice(),book.getImage(),book.getAuthor());
+            Order_product_wrap tmp=new Order_product_wrap(products.get(j));
             product_wraps.add(tmp);
         }
         return product_wraps;
@@ -69,9 +62,6 @@ public class OredrServiceImpl implements OrderService {
             AnaUtil.compact(result,getProductsByOrderid(orders.get(i).getId()));
         }
         return result;
-//        for(int i=0;i<orders.size()-1;i++){
-//             List
-//        }
     }
 
     @Override
@@ -101,10 +91,10 @@ public class OredrServiceImpl implements OrderService {
         //遍历订单
         for(int i=0;i<orders.size();i++){
             Order_info order_info=orders.get(i);
+            UserAuth user=order_info.getUserAuth();
             //根据订单得到用户信息
-            UserAuth user=userDao.getUser(order_info.getUserid());
             //根据订单id得到所用商品信息
-            List<Order_product_wrap> product_wraps=getProductsByOrderid(order_info.getId());
+            List<Order_product_wrap> product_wraps=this.getProductsByOrderid(order_info.getId());
             //得到订单价值
             BigDecimal value=order_info.getValue();
             User_Comsumption user_comsumption=new User_Comsumption(user,product_wraps,value);
@@ -114,26 +104,19 @@ public class OredrServiceImpl implements OrderService {
     }
     @Override
     public List<Order_wrap> getAllOrders(){
-        //先取得所有用户
-        List<UserAuth> userAuths=userDao.getUsers();
+        List<Order_info> orders=orderInfoDao.getAllOrders();
         List<Order_wrap> order_wraps=new ArrayList<>();
-        //遍历用户得到所有订单
-        for(int k=0;k<userAuths.size();k++){
-            List<Order_info> orders=orderInfoDao.findByUserid(userAuths.get(k).getUserId());
-            for(int i=0;i<orders.size();i++){
-                Order_info order=orders.get(i);
-                //order_wraps.add(new Order_wrap(order,orderProductDao.getProducts(order.getId())));
-                List<Order_product> products=orderProductDao.getProducts(order.getId());
-                List<Order_product_wrap> product_wraps=new ArrayList<>();
-                for(int j=0;j<products.size();j++){
-                    Book book=bookDao.findOne(products.get(j).getProduct_id());
-                    Order_product_wrap tmp=new Order_product_wrap(products.get(j),book.getName(),book.getPrice(),book.getImage(),book.getAuthor());
-                    product_wraps.add(tmp);
-                }
-                order_wraps.add(new Order_wrap(order,product_wraps));
-            }
+        for(int i=0;i<orders.size();i++){
+            order_wraps.add(new Order_wrap(orders.get(i)));
         }
         return order_wraps;
+    }
+    @Override
+    public List<Order_wrap> getOrdersByTime(String begin,String end){
+        //先取得所有订单
+        List<Order_wrap> order_wraps=this.getAllOrders();
+        List<Order_wrap> filters=order_wraps.stream().filter(order_wrap -> AnaUtil.InRange(order_wrap.getTime(),begin,end)).collect(Collectors.toList());
+        return filters;
     }
     @Override
     public void addOrder_wrap(Order_wrap order_wrap){

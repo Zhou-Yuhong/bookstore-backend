@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import zn.zyh.back_code.constant.Constant;
-import zn.zyh.back_code.entity.Order_info;
-import zn.zyh.back_code.entity.Order_product;
-import zn.zyh.back_code.entity.Order_product_wrap;
-import zn.zyh.back_code.entity.Order_wrap;
+import zn.zyh.back_code.entity.*;
 import zn.zyh.back_code.service.BookService;
 import zn.zyh.back_code.service.OrderService;
 import zn.zyh.back_code.utils.objectutils.*;
@@ -69,4 +66,12 @@ public class OrderController {
         List<Order_wrap> result=orderService.getAllOrders();
         return result;
     }
+    @RequestMapping("/getDateOrders")
+    List<Order_wrap> getDateOrders(@RequestBody JSONObject param){
+        JSONArray date=param.getJSONArray("date");
+        String begin=(String)date.get(0);
+        String end=(String)date.get(1);
+        return orderService.getOrdersByTime(begin,end);
+    }
+
 }

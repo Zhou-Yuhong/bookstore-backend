@@ -29,9 +29,11 @@ public class Order_product_wrap {
         this.product_id=order_product.getProduct_id();
         this.order_id=order_product.getOrder_id();
         this.num=order_product.getNum();
-        this.name="";
-        this.image="";
-        this.author="";
+        Book book=order_product.getBook();
+        this.name=book.getName();
+        this.image=book.getImage();
+        this.author=book.getAuthor();
+        this.price=book.getPrice();
     }
     public Order_product_wrap(int product_id,int order_id,int num){
         this.product_id=product_id;

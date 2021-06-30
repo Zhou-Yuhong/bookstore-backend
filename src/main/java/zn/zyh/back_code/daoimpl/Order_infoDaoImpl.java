@@ -44,4 +44,12 @@ public class Order_infoDaoImpl implements Order_infoDao {
         List<Order_info> filterOrders=orders.stream().filter(order_info -> AnaUtil.InRange(order_info.getOrder_time(),begin,end)).collect(Collectors.toList());
         return filterOrders;
     }
+    @Override
+    public List<Order_info> getAllOrders(){
+        return order_infoRepository.findAll();
+    }
+    @Override
+    public Order_info getOrder(int id){
+        return order_infoRepository.getOne(id);
+    }
 }

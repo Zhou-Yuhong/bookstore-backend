@@ -13,4 +13,7 @@ public interface Order_infoDao {
     List<Order_info> getOrdersByTime(String begin, String end);
     //根据时间以及用户id返回订单
     List<Order_info> getOrdersByUseridAndTime(int userid,String begin,String end);
+    List<Order_info> getAllOrders();
+    //通过id查找订单
+    Order_info getOrder(int id);
 }

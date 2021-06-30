@@ -12,6 +12,7 @@ public interface OrderService {
     void addOrder_wrap(Order_wrap order_wrap);
     //返回所有订单
     List<Order_wrap> getAllOrders();
+    List<Order_wrap> getOrdersByTime(String begin,String end);
     //返回订单id对应的所有商品
     List<Order_product_wrap> getProductsByOrderid(int orderid);
     //根据时间范围返回所有的订单

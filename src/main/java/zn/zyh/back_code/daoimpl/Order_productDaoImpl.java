@@ -16,10 +16,6 @@ public class Order_productDaoImpl implements Order_productDao {
     @Autowired
     Order_productRepository order_productRepository;
     @Override
-    public List<Order_product> getProducts(int orderid){
-        return order_productRepository.getProducts(orderid);
-    }
-    @Override
     public void addProducts(List<Order_product> order_products, int orderid){
         for(int i=0;i<order_products.size();i++){
             order_products.get(i).setOrder_id(orderid);
