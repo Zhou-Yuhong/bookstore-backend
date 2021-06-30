@@ -24,6 +24,10 @@ public class BookServiceImpl implements BookService {
         return bookDao.getBooks();
     }
     @Override
+    public List<Book> getPageBooks(Integer page){
+        return bookDao.getPageBooks(page);
+    }
+    @Override
     public boolean reduceStocks(Integer id,Integer num){
         return bookDao.reduceStocks(id,num);
     }

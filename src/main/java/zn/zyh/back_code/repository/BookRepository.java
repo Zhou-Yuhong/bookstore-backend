@@ -12,12 +12,6 @@ import java.util.List;
 public interface BookRepository extends JpaRepository<Book,Integer> {
     @Query("select b from Book b")
     List<Book> getBooks();
-
-//    @Query(value = "from UserAuth where username = :username and password = :password")
-//    UserAuth checkUser(@Param("username") String username, @Param("password") String password);
-//    @Modifying
-//    @Query("update Book set inventory=?1 where id=?2")
-//    void updateInventory(int inventory,int id);
     @Modifying
     @Query(value = "update Book set inventory = :inventory where id = :id")
     void updateInventory(@Param("inventory") int inventory,@Param("id") int id);

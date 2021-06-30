@@ -26,6 +26,19 @@ public class BookDaoImpl implements BookDao {
         return bookRepository.getBooks();
     }
     @Override
+   public List<Book> getPageBooks(Integer page){
+        List<Book> all=bookRepository.getBooks();
+        int begin=(page-1)*9;
+        int end=page*9;
+        List<Book> result=new ArrayList<>();
+        if(begin>=all.size()) return result;
+        end= end<all.size() ? end:all.size();
+        for(int i=begin;i<end;i++){
+            result.add(all.get(i));
+        }
+        return result;
+    }
+    @Override
     public boolean reduceStocks(Integer id, Integer num){
          Book book=bookRepository.getOne(id);
          int inventory=book.getInventory();

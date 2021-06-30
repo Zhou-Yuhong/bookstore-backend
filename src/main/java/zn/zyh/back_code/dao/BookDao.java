@@ -9,6 +9,7 @@ public interface BookDao {
     Book findOne(Integer id);
 
     List<Book> getBooks();
+    List<Book> getPageBooks(Integer page);
     boolean reduceStocks(Integer id, Integer num);
     void updateInventory(int inventory,int id);
 

@@ -28,7 +28,12 @@ public class BookController {
 
         return result;
     }
+    @RequestMapping("/getPageBooks")
+    public List<Book> getPageBooks(@RequestBody JSONObject param){
+        Integer page=param.getInt("page");
+        return bookService.getPageBooks(page) ;
 
+    }
     @RequestMapping("/getBook")
     public Book getBook(@RequestParam("id") Integer id){
         Book book= bookService.findBookById(id);
