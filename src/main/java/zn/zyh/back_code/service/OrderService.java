@@ -7,11 +7,14 @@ import java.util.List;
 public interface OrderService {
     //返回useid的所有订单
     List<Order_wrap> getOrder_wrapsByUserid(int userid);
-
+    //仅返回订单信息
+    List<Order_info> getOrderByUser(int userid);
     //增加订单
     void addOrder_wrap(Order_wrap order_wrap);
-    //返回所有订单
+    //返回所有订单，包含具体商品信息
     List<Order_wrap> getAllOrders();
+    //返回所有订单，不包含具体商品信息
+    List<Order_info> GetAllOrders();
     List<Order_wrap> getOrdersByTime(String begin,String end);
     //返回订单id对应的所有商品
     List<Order_product_wrap> getProductsByOrderid(int orderid);

@@ -20,6 +20,10 @@ public class UserServiceimpl implements UserService {
         return userDao.checkUser(username, password);
     }
     @Override
+    public Boolean checkUsername(String username){
+        return userDao.checkUsername(username);
+    }
+    @Override
     public Boolean register(String username,String password,String tel,String email,String gender){
         return userDao.register(username,password,tel,email,gender);
     }

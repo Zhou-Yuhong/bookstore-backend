@@ -38,6 +38,16 @@ UserRepository userRepository;
        return true;
 }
 @Override
+  public Boolean checkUsername(String username){
+    List<UserAuth> allUsers=userAuthRepository.getUsers();
+    for(int i=0;i<allUsers.size();i++){
+        //注意String的比较要用equals
+        if(allUsers.get(i).getUsername().equals(username)) return false;
+
+    }
+    return true;
+}
+@Override
     public List<UserAuth> getUsers(){
        return userAuthRepository.getUsers();
 }

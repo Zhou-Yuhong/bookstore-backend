@@ -37,6 +37,10 @@ public class OredrServiceImpl implements OrderService {
        }
        return order_wraps;
     }
+    @Override
+    public  List<Order_info> getOrderByUser(int userid){
+        return orderInfoDao.findByUserid(userid);
+    }
     //获得orderid对应的商品,包括商品数量以及各种信息
     @Override
     public List<Order_product_wrap> getProductsByOrderid(int orderid){
@@ -110,6 +114,10 @@ public class OredrServiceImpl implements OrderService {
             order_wraps.add(new Order_wrap(orders.get(i)));
         }
         return order_wraps;
+    }
+    @Override
+    public List<Order_info> GetAllOrders(){
+        return orderInfoDao.getAllOrders();
     }
     @Override
     public List<Order_wrap> getOrdersByTime(String begin,String end){

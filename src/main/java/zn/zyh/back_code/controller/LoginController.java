@@ -80,19 +80,10 @@ public class LoginController {
         String email=params.get("email");
         String gender=params.get("gender");
         return  userService.register(username,password,tel,email,gender);
-
-//        JSONObject obj=new JSONObject();
-//        obj.put (Constant.USER_ID,newUser.getUserId());
-//        obj.put(Constant.USERNAME,newUser.getUsername());
-//        obj.put(Constant.USER_TYPE,newUser.getUserType());
-//        SessionUtil.setSession(obj);
-//        //session
-//        JSONObject auth2 = SessionUtil.getAuth();
-//        System.out.print("session2"+auth2);
-//        //session
-//        JSONObject data = JSONObject.fromObject(newUser);
-//        data.remove(Constant.PASSWORD);
-//
-//        return MsgUtil.makeMsg(MsgCode.SUCCESS, MsgUtil.LOGIN_SUCCESS_MSG, data);
+    }
+    @RequestMapping("/checkUsername")
+    public boolean checkUsername(@RequestBody Map<String,String> params){
+        String username=params.get(Constant.USERNAME);
+        return userService.checkUsername(username);
     }
 }

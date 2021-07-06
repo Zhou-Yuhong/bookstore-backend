@@ -28,10 +28,10 @@ public class OrderController {
     private Objectutils objectutils;
     //返回所有订单
     @RequestMapping("/getOrders")
-    public List<Order_wrap> getOrders(@RequestBody JSONObject param){
+    public List<Order_info> getOrders(@RequestBody JSONObject param){
         int userid=param.getInt("userid");
         System.out.print("服务器接收到getorders请求\n");
-        List<Order_wrap> result=orderService.getOrder_wrapsByUserid(userid);
+        List<Order_info> result=orderService.getOrderByUser(userid);
         return result;
     }
     @RequestMapping("/setOrders")
@@ -62,16 +62,21 @@ public class OrderController {
         return;
     }
     @RequestMapping("/getAllOrders")
-    public List<Order_wrap> getAllOrders(@RequestBody Map<String, String> params){
-        List<Order_wrap> result=orderService.getAllOrders();
+    public List<Order_info> getAllOrders(@RequestBody Map<String, String> params){
+        List<Order_info> result=orderService.GetAllOrders();
         return result;
     }
     @RequestMapping("/getDateOrders")
-    List<Order_wrap> getDateOrders(@RequestBody JSONObject param){
+    List<Order_info> getDateOrders(@RequestBody JSONObject param){
         JSONArray date=param.getJSONArray("date");
         String begin=(String)date.get(0);
         String end=(String)date.get(1);
-        return orderService.getOrdersByTime(begin,end);
+        return orderService.getOrderidsBytime(begin,end);
+    }
+    @RequestMapping("/getOrderItems")
+    List<Order_product_wrap> getOrderItems(@RequestBody JSONObject param){
+        Integer order_id=param.getInt("order_id");
+        return orderService.getProductsByOrderid(order_id);
     }
 
 }
