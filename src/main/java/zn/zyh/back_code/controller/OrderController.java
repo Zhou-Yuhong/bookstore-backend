@@ -78,5 +78,9 @@ public class OrderController {
         Integer order_id=param.getInt("order_id");
         return orderService.getProductsByOrderid(order_id);
     }
-
+    @RequestMapping("/getProductOrders")
+    List<Order_info> getProductOrders(@RequestBody JSONObject param){
+        String productName= param.getString("productName");
+        return orderService.getOrdersByProductName(productName);
+    }
 }

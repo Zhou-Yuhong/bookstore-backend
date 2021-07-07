@@ -28,7 +28,7 @@ public class Order_info {
     //顶单状态
     private int state;
     @JsonIgnoreProperties({"order_info"})
-    @OneToMany(mappedBy = "order_id",cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
+    @OneToMany(mappedBy = "order_id",cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true)
     private List<Order_product> order_products;
     @OneToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name="userid",referencedColumnName = "user_id",insertable = false,updatable = false)

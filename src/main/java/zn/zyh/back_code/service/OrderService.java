@@ -26,4 +26,5 @@ public interface OrderService {
     List<Order_product_wrap>getProductsByTime(String begin,String end);
     //根据时间返回用户消费信息
     List<User_Comsumption> getUser_ComByTime(String begin,String end);
+    List<Order_info> getOrdersByProductName(String productName);
 }

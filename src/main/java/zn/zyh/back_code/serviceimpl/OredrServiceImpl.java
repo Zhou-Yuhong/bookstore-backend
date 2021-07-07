@@ -136,4 +136,17 @@ public class OredrServiceImpl implements OrderService {
        }
        orderProductDao.addProducts(order_products,order_id);
     }
+    @Override
+    public List<Order_info> getOrdersByProductName(String productName){
+        List<Order_product> order_products=orderProductDao.getProducts();
+        List<Order_info> sorter=new ArrayList<>();
+        for(int i=0;i<order_products.size();i++){
+            Order_product order_product=order_products.get(i);
+            Book book=order_product.getBook();
+            if(book.getName().contains(productName)){
+                sorter.add(order_product.getOrder_info());
+            }
+        }
+        return sorter;
+    }
 }

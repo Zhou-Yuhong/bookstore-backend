@@ -22,4 +22,8 @@ public class Order_productDaoImpl implements Order_productDao {
             order_productRepository.saveAndFlush(order_products.get(i));
         }
     }
+    @Override
+    public List<Order_product> getProducts(){
+        return order_productRepository.findAll();
+    }
 }
