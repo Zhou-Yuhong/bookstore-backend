@@ -47,8 +47,11 @@ public class LoginController {
             return MsgUtil.makeMsg(MsgCode.SUCCESS, MsgUtil.LOGIN_SUCCESS_MSG, data);
 
         }
-        else{
+        else if(auth==null){
             return MsgUtil.makeMsg(MsgCode.LOGIN_USER_ERROR);
+        }
+        else{
+            return MsgUtil.makeMsg(MsgUtil.DISABLE_USER_ERROR,MsgUtil.DISABLE_USER);
         }
     }
     @RequestMapping("/logout")
