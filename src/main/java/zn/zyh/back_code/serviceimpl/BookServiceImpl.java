@@ -2,7 +2,7 @@ package zn.zyh.back_code.serviceimpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import zn.zyh.back_code.dao.BookDao;
+import zn.zyh.back_code.repository.BookRepository;
 import zn.zyh.back_code.entity.Book;
 import zn.zyh.back_code.service.BookService;
 
@@ -13,41 +13,41 @@ import java.util.List;
 @Transactional
 public class BookServiceImpl implements BookService {
     @Autowired
-    private BookDao bookDao;
+    private BookRepository bookRepository;
     @Override
     public Book findBookById(Integer id){
-        return bookDao.findOne(id);
+        return bookRepository.findOne(id);
     }
 
     @Override
     public List<Book> getBooks() {
-        return bookDao.getBooks();
+        return bookRepository.getBooks();
     }
     @Override
     public List<Book> getPageBooks(Integer page){
-        return bookDao.getPageBooks(page);
+        return bookRepository.getPageBooks(page);
     }
     @Override
     public boolean reduceStocks(Integer id,Integer num){
-        return bookDao.reduceStocks(id,num);
+        return bookRepository.reduceStocks(id,num);
     }
     @Override
     public void updateInventory(int inventory,int id){
-        bookDao.updateInventory(inventory,id);
+        bookRepository.updateInventory(inventory,id);
     }
 
     @Override
     public void deleteBooks(List<Book> books){
-        bookDao.deleteBooks(books);
+        bookRepository.deleteBooks(books);
     }
 
     @Override
     public void addBooks(List<Book> books){
-       bookDao.addBooks(books);
+       bookRepository.addBooks(books);
     }
 
     @Override
     public void updateBooks(List<Book> books){
-       bookDao.updateBooks(books);
+       bookRepository.updateBooks(books);
     }
 }

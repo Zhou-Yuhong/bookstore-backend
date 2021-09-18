@@ -1,9 +1,11 @@
 package zn.zyh.back_code.entity;
-
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
+import zn.zyh.back_code.dto.Order_info;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -13,13 +15,11 @@ import java.util.List;
 @Entity
 @Table(name="order_info")
 @JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
-public class Order_info {
+public class Order {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="id",unique = true,nullable = false)
     private int id;
-    //下订单的用户名
-    private int userid;
     private String order_time;
     //订单包含的商品种类数目
     private int num;
@@ -27,20 +27,30 @@ public class Order_info {
     private BigDecimal value;
     //顶单状态
     private int state;
-    @JsonIgnoreProperties({"order_info"})
-    @OneToMany(mappedBy = "order_id",cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true)
+
+    @JsonIgnore
+    @JSONField(serialize = false)
+    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true)
     private List<Order_product> order_products;
+
     @OneToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name="userid",referencedColumnName = "user_id",insertable = false,updatable = false)
+    @JoinColumn(name="userid",referencedColumnName = "user_id")
     private UserAuth userAuth;
-    public Order_info( int  userid, String order_time,int num,BigDecimal value,int state){
-        this.userid=userid;
+    public Order(String order_time, int num, BigDecimal value, int state, UserAuth userAuth){
+        this.userAuth=userAuth;
         this.order_time=order_time;
         this.num=num;
         this.value=value;
         this.state=state;
     }
-    public Order_info(){}
+    public Order(UserAuth userAuth, Order_info order_info){
+        this.userAuth=userAuth;
+        this.order_time=order_info.getOrder_time();
+        this.num=order_info.getNum();
+        this.value=order_info.getValue();
+        this.state=order_info.getState();
+    }
+    public Order(){}
 
 
 }

@@ -5,13 +5,11 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import zn.zyh.back_code.entity.Order_product_wrap;
-import zn.zyh.back_code.entity.User_Comsumption;
+import zn.zyh.back_code.dto.Order_product_wrap;
+import zn.zyh.back_code.dto.User_Comsumption;
 import zn.zyh.back_code.service.OrderService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

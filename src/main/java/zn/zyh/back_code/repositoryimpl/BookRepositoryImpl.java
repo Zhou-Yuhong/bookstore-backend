@@ -1,21 +1,18 @@
-package zn.zyh.back_code.daoimpl;
+package zn.zyh.back_code.repositoryimpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.relational.core.sql.In;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestBody;
 import zn.zyh.back_code.dao.BookDao;
-import zn.zyh.back_code.entity.Book;
 import zn.zyh.back_code.repository.BookRepository;
+import zn.zyh.back_code.entity.Book;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class BookDaoImpl implements BookDao {
+public class BookRepositoryImpl implements BookRepository {
     @Autowired
-    private BookRepository bookRepository;
+    private BookDao bookRepository;
 
     @Override
     public Book findOne(Integer id){

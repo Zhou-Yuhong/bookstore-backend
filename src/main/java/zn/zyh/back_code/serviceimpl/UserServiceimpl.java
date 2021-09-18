@@ -2,7 +2,7 @@ package zn.zyh.back_code.serviceimpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import zn.zyh.back_code.dao.UserDao;
+import zn.zyh.back_code.repository.UserRepository;
 import zn.zyh.back_code.entity.UserAuth;
 import zn.zyh.back_code.service.UserService;
 
@@ -13,7 +13,7 @@ import java.util.List;
 @Transactional
 public class UserServiceimpl implements UserService {
     @Autowired
-    private UserDao userDao;
+    private UserRepository userDao;
     @Override
     public UserAuth checkUser(String username, String password)
     {

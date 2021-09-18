@@ -1,6 +1,6 @@
 package zn.zyh.back_code.utils.analysisutils;
-import zn.zyh.back_code.entity.Order_product_wrap;
-import zn.zyh.back_code.entity.User_Comsumption;
+import zn.zyh.back_code.dto.Order_product_wrap;
+import zn.zyh.back_code.dto.User_Comsumption;
 
 import java.util.*;
 import java.util.regex.Matcher;

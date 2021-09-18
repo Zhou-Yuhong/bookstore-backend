@@ -1,13 +1,11 @@
 package zn.zyh.back_code.dao;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import zn.zyh.back_code.entity.Order_product;
-import zn.zyh.back_code.entity.Order_product_wrap;
 
 import java.util.List;
 
-public interface Order_productDao {
-    //添加物品
-    void addProducts(List<Order_product> order_products, int orderid);
-    //取得全部商品
-    List<Order_product> getProducts();
+public interface Order_productDao extends JpaRepository<Order_product,Integer> {
+    List<Order_product> getOrder_productsByBook_Name(String name);
 }
