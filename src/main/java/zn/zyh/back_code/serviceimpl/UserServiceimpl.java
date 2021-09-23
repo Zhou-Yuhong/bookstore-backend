@@ -1,6 +1,7 @@
 package zn.zyh.back_code.serviceimpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import zn.zyh.back_code.repository.UserRepository;
 import zn.zyh.back_code.entity.UserAuth;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Service
 @Transactional
+@Scope("session")
 public class UserServiceimpl implements UserService {
     @Autowired
     private UserRepository userDao;

@@ -26,9 +26,6 @@ public class OrderController {
     private OrderService orderService;
 
     @Autowired
-    private BookService bookService;
-
-    @Autowired
     private OrderProducer orderProducer;
 
     private Objectutils objectutils;

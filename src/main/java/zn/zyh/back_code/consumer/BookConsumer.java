@@ -1,6 +1,7 @@
 package zn.zyh.back_code.consumer;
 import static zn.zyh.back_code.constant.RabbitmqConstant.*;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONArray;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
@@ -22,15 +23,15 @@ public class BookConsumer {
 
     @RabbitHandler
     public void handle(JSONObject param){
-        List<Book> debooks=new ArrayList<>();
-        JSONArray books=param.getJSONArray("deletebooks");
+        List<Book> adbooks=new ArrayList<>();
+        JSONArray books=param.getJSONArray("addbooks");
         for(Object it:books){
-            JSONObject tmp=(JSONObject)it;
+            JSONObject tmp= JSON.parseObject(JSONObject.toJSONString(it));
             //public Book( int id, String isbn, String name, String type, String author, BigDecimal price, String description,Integer inventory, String image)
             BigDecimal value=new BigDecimal(tmp.getString("price"));
-            Book book=new Book(tmp.getInteger("key"),tmp.getString("isbn"),tmp.getString("name"),tmp.getString("type"),tmp.getString("author"),value,tmp.getString("description"),tmp.getInteger("inventory"),tmp.getString("image"));
-            debooks.add(book);
+            Book book=new Book(0,tmp.getString("isbn"),tmp.getString("name"),tmp.getString("type"),tmp.getString("author"),value,tmp.getString("description"),tmp.getInteger("inventory"),tmp.getString("image"));
+            adbooks.add(book);
         }
-        bookService.deleteBooks(debooks);
+        bookService.addBooks(adbooks);
     }
 }

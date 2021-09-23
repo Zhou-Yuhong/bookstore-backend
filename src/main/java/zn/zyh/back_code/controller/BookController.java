@@ -1,5 +1,6 @@
 package zn.zyh.back_code.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,16 @@ public class BookController {
 
     @RequestMapping("/deleteBooks")
     public boolean deleteBooks(@RequestBody JSONObject param){
-       bookProducer.sendBook(param);
+        List<Book> debooks=new ArrayList<>();
+        JSONArray books=param.getJSONArray("deletebooks");
+        for(Object it:books){
+            JSONObject tmp= JSON.parseObject(JSONObject.toJSONString(it));
+            //public Book( int id, String isbn, String name, String type, String author, BigDecimal price, String description,Integer inventory, String image)
+            BigDecimal value=new BigDecimal(tmp.getString("price"));
+            Book book=new Book(tmp.getInteger("key"),tmp.getString("isbn"),tmp.getString("name"),tmp.getString("type"),tmp.getString("author"),value,tmp.getString("description"),tmp.getInteger("inventory"),tmp.getString("image"));
+            debooks.add(book);
+        }
+        bookService.deleteBooks(debooks);
         return true;
     }
 
@@ -52,8 +62,8 @@ public class BookController {
     public boolean updateBooks(@RequestBody JSONObject param){
         List<Book> upbooks=new ArrayList<>();
         JSONArray books=param.getJSONArray("updatebooks");
-        for(int i=0;i<books.size();i++){
-            JSONObject tmp=(JSONObject)books.get(i);
+        for(Object it:books){
+            JSONObject tmp= JSON.parseObject(JSONObject.toJSONString(it));
             //public Book( int id, String isbn, String name, String type, String author, BigDecimal price, String description,Integer inventory, String image)
             BigDecimal value=new BigDecimal(tmp.getString("price"));
             Book book=new Book(tmp.getInteger("key"),tmp.getString("isbn"),tmp.getString("name"),tmp.getString("type"),tmp.getString("author"),value,tmp.getString("description"),tmp.getInteger("inventory"),tmp.getString("image"));
@@ -64,16 +74,7 @@ public class BookController {
     }
     @RequestMapping("/addBooks")
     public boolean addBooks(@RequestBody JSONObject param){
-        List<Book> adbooks=new ArrayList<>();
-        JSONArray books=param.getJSONArray("addbooks");
-        for(int i=0;i<books.size();i++){
-            JSONObject tmp=(JSONObject)books.get(i);
-            //public Book( int id, String isbn, String name, String type, String author, BigDecimal price, String description,Integer inventory, String image)
-            BigDecimal value=new BigDecimal(tmp.getString("price"));
-            Book book=new Book(0,tmp.getString("isbn"),tmp.getString("name"),tmp.getString("type"),tmp.getString("author"),value,tmp.getString("description"),tmp.getInteger("inventory"),tmp.getString("image"));
-            adbooks.add(book);
-        }
-        bookService.addBooks(adbooks);
+        bookProducer.sendBook(param);
         return true;
     }
 }

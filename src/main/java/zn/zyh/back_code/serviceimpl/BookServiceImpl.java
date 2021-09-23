@@ -1,6 +1,7 @@
 package zn.zyh.back_code.serviceimpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import zn.zyh.back_code.repository.BookRepository;
 import zn.zyh.back_code.entity.Book;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Service
 @Transactional
+@Scope("singleton")
 public class BookServiceImpl implements BookService {
     @Autowired
     private BookRepository bookRepository;

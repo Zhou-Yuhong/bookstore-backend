@@ -20,7 +20,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry){
         registry.addInterceptor(sessionValidateInterceptor()).addPathPatterns("/**")
                 .excludePathPatterns("/login").excludePathPatterns("/register")
-                .excludePathPatterns("/checkUsername");
+                .excludePathPatterns("/checkUsername").excludePathPatterns("/chatRoom");
     }
 
     private CorsConfiguration buildConfig() {

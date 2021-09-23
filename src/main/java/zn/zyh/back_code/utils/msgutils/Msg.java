@@ -65,5 +65,4 @@ public class Msg {
     public void setData(JSONObject data) {
         this.data = data;
     }
-
 }

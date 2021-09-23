@@ -3,6 +3,7 @@ package zn.zyh.back_code.controller;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,7 @@ import zn.zyh.back_code.service.OrderService;
 
 import java.util.List;
 
+@Scope("singleton")
 @RestController
 public class AnalysisController {
     @Autowired

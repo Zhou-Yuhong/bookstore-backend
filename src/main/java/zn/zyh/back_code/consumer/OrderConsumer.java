@@ -1,6 +1,7 @@
 package zn.zyh.back_code.consumer;
 import static zn.zyh.back_code.constant.RabbitmqConstant.*;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONArray;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
@@ -40,8 +41,8 @@ public class OrderConsumer {
             Order_info orderInfo=new Order_info(userid,order_time,num,value,state);
             List<Order_product_wrap> order_products=new ArrayList<>();
             JSONArray products=param.getJSONArray("order_products");
-            for(int i=0;i<products.size();i++){
-                JSONObject tmp=(JSONObject) products.get(i);
+            for(Object it:products){
+                JSONObject tmp= JSON.parseObject(JSONObject.toJSONString(it));
                 //这里的order_id不重要，
                 Order_product_wrap new_order=new Order_product_wrap(tmp.getInteger("product_id"),0,tmp.getInteger("num"));
                 order_products.add(new_order);

@@ -4,6 +4,7 @@ package zn.zyh.back_code.controller;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.WebApplicationContext;
 import zn.zyh.back_code.constant.Constant;
 import zn.zyh.back_code.entity.UserAuth;
 import zn.zyh.back_code.service.UserService;
@@ -17,9 +18,10 @@ import java.util.Map;
 @RestController
 @CrossOrigin
 public class LoginController {
+//    @Autowired
+//    private UserService userService;
     @Autowired
-    private UserService userService;
-
+    WebApplicationContext applicationContext;
 
     @RequestMapping(value="/login",method= RequestMethod.POST)
     public Msg login(@RequestBody Map<String,String> params){
@@ -27,8 +29,7 @@ public class LoginController {
 
         String username=params.get(Constant.USERNAME);
         String password=params.get(Constant.PASSWORD);
-//        System.out.print("username  "+username);
-//        System.out.print("password  "+password+"\n");
+        UserService userService=applicationContext.getBean(UserService.class);
         UserAuth auth=userService.checkUser(username,password);
         if(auth!=null&&auth.getUserstate()==0){
             System.out.print(auth.getUsername());
@@ -77,6 +78,7 @@ public class LoginController {
     }
     @RequestMapping("/register")
     public boolean register(@RequestBody Map<String,String> params){
+        UserService userService=applicationContext.getBean(UserService.class);
         String username=params.get(Constant.USERNAME);
         String password=params.get(Constant.PASSWORD);
         String tel=params.get("tel");
@@ -86,6 +88,7 @@ public class LoginController {
     }
     @RequestMapping("/checkUsername")
     public boolean checkUsername(@RequestBody Map<String,String> params){
+        UserService userService=applicationContext.getBean(UserService.class);
         String username=params.get(Constant.USERNAME);
         return userService.checkUsername(username);
     }
