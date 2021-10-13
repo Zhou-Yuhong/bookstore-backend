@@ -1,5 +1,6 @@
 package zn.zyh.back_code.dao;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,4 +16,5 @@ public interface BookDao extends JpaRepository<Book,Integer> {
     @Modifying
     @Query(value = "update Book set inventory = :inventory where id = :id")
     void updateInventory(@Param("inventory") int inventory,@Param("id") int id);
+    Book getBookById(Integer id);
 }

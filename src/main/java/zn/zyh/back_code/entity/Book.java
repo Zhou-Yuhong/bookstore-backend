@@ -6,13 +6,14 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Data
 @Entity
 @Table(name="book")
 @JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
-public class Book {
+public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="id",unique = true,nullable = false)
@@ -39,35 +40,14 @@ public class Book {
         this.inventory=inventory;
         this.image=image;
     }
-//    public void setInventory(Integer inventory){
-//        this.inventory=inventory;
-//    }
-//    public String getName() {
-//        return name;
-//    }
-//    public int getId(){
-//        return this.id;
-//    }
-//    public String getType(){
-//        return this.type;
-//    }
-//
-//    public String getAuthor() {
-//        return author;
-//    }
-//    public Double getPrice(){
-//        return price;
-//    }
-//    public String getDescription(){
-//        return description;
-//    }
-//    public Integer getInventory(){
-//        return this.inventory;
-//    }
-//    public String getIsbn(){
-//        return this.isbn;
-//    }
-//    public String getImage(){
-//        return this.image;
-//    }
+    public void updateInfo(Book book){
+        this.isbn=book.isbn;
+        this.name=book.name;
+        this.type=book.type;
+        this.author=book.author;
+        this.price=book.price;
+        this.description=book.description;
+        this.inventory=book.inventory;
+        this.image=book.image;
+    }
 }

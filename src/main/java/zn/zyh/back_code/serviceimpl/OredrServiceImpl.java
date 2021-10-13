@@ -2,6 +2,8 @@ package zn.zyh.back_code.serviceimpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import zn.zyh.back_code.dto.Order_info;
 import zn.zyh.back_code.dto.Order_product_wrap;
 import zn.zyh.back_code.dto.Order_wrap;
@@ -14,7 +16,6 @@ import zn.zyh.back_code.entity.*;
 import zn.zyh.back_code.service.OrderService;
 import zn.zyh.back_code.utils.analysisutils.AnaUtil;
 
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -130,14 +131,21 @@ public class OredrServiceImpl implements OrderService {
         return filters;
     }
     @Override
+    @Transactional( propagation = Propagation.REQUIRED)
     public void addOrder_wrap(Order_wrap order_wrap){
         Order_info order_info =order_wrap.order_info;
         UserAuth userAuth=userRepository.getUser(order_info.getUserid());
         Order order=new Order(userAuth,order_info);
-       int order_id= orderInfoRepository.addOrder(order);
-       order.setId(order_id);
-       List<Order_product_wrap> order_product_wraps=order_wrap.getOrder_products();
-       orderProductRepository.addProducts(order_product_wraps,order);
+        List<Order_product_wrap> order_product_wraps=order_wrap.getOrder_products();
+        //减去库存
+        for(Order_product_wrap it:order_product_wraps){
+            if(!bookRepository.reduceStocks(it.getProduct_id(),it.getNum())){
+                throw new RuntimeException("库存不足，下订单失败");
+            }
+        }
+        int order_id= orderInfoRepository.addOrder(order);
+        order.setId(order_id);
+        orderProductRepository.addProducts(order_product_wraps,order);
     }
     @Override
     public List<Order> getOrdersByProductName(String productName){

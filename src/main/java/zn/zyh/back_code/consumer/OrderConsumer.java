@@ -46,8 +46,6 @@ public class OrderConsumer {
                 //这里的order_id不重要，
                 Order_product_wrap new_order=new Order_product_wrap(tmp.getInteger("product_id"),0,tmp.getInteger("num"));
                 order_products.add(new_order);
-                //TODO 添加下订单未成功的处理
-                bookService.reduceStocks(tmp.getInteger("product_id"),tmp.getInteger("num"));
             }
             Order_wrap order_wrap=new Order_wrap(orderInfo,order_products);
 

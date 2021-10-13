@@ -28,7 +28,6 @@ public class BookController {
     @RequestMapping("/getBooks")
     public List<Book> getBooks(@RequestBody Map<String, String> params) {
         List<Book> result=bookService.getBooks();
-
         return result;
     }
     @RequestMapping("/getPageBooks")
@@ -42,6 +41,7 @@ public class BookController {
         Book book= bookService.findBookById(id);
         return book;
     }
+
 
     @RequestMapping("/deleteBooks")
     public boolean deleteBooks(@RequestBody JSONObject param){
@@ -76,5 +76,10 @@ public class BookController {
     public boolean addBooks(@RequestBody JSONObject param){
         bookProducer.sendBook(param);
         return true;
+    }
+    @RequestMapping("/searchBooks")
+    public List<Book> searchBooks(@RequestBody JSONObject param){
+        String word=param.getString("word");
+        return bookService.searchBook(word);
     }
 }

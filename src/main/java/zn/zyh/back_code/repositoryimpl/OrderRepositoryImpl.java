@@ -2,6 +2,8 @@ package zn.zyh.back_code.repositoryimpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import zn.zyh.back_code.dao.OrderDao;
 import zn.zyh.back_code.dao.UserAuthDao;
 import zn.zyh.back_code.entity.UserAuth;
@@ -24,6 +26,7 @@ public class OrderRepositoryImpl implements OrderRepository {
         return orderDao.getOrdersByUserAuth(userAuth);
     }
     @Override
+    @Transactional(propagation = Propagation.MANDATORY)
     public int addOrder(Order order_info){
         Order order= orderDao.save(order_info);
       return order.getId();

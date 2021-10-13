@@ -14,6 +14,7 @@ public interface BookService {
     //删除书籍
     void deleteBooks(List<Book> books);
     List<Book> getPageBooks(Integer page);
+    List<Book> searchBook(String word);
     //增加书籍
     void addBooks(List<Book> books);
 

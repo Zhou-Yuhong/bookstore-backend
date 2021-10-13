@@ -2,6 +2,8 @@ package zn.zyh.back_code.repositoryimpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import zn.zyh.back_code.entity.User;
 import zn.zyh.back_code.entity.UserAuth;
 import zn.zyh.back_code.dao.UserAuthDao;
@@ -67,6 +69,7 @@ UserDao userRepository;
     }
     }
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
      public UserAuth getUser(int userid){
     return userAuthDao.getOne(userid);
     }

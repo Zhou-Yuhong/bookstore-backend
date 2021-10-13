@@ -18,4 +18,5 @@ public interface BookRepository {
     void addBooks(List<Book> books);
 
     void updateBooks(List<Book> books);
+    void updateBook(Book book);
 }

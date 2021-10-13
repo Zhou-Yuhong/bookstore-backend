@@ -1,7 +1,11 @@
 package zn.zyh.back_code.repositoryimpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import zn.zyh.back_code.dao.BookDao;
 import zn.zyh.back_code.repository.BookRepository;
 import zn.zyh.back_code.entity.Book;
@@ -12,62 +16,58 @@ import java.util.List;
 @Repository
 public class BookRepositoryImpl implements BookRepository {
     @Autowired
-    private BookDao bookRepository;
+    private BookDao bookDao;
 
     @Override
     public Book findOne(Integer id){
-        return bookRepository.getOne(id);
+        return bookDao.getOne(id);
     }
     @Override
     public List<Book> getBooks(){
-        return bookRepository.getBooks();
+        return bookDao.getBooks();
     }
     @Override
    public List<Book> getPageBooks(Integer page){
-        List<Book> all=bookRepository.getBooks();
-        int begin=(page-1)*9;
-        int end=page*9;
-        List<Book> result=new ArrayList<>();
-        if(begin>=all.size()) return result;
-        end= end<all.size() ? end:all.size();
-        for(int i=begin;i<end;i++){
-            result.add(all.get(i));
-        }
-        return result;
+        PageRequest pageRequest = PageRequest.of(page,9);
+        Page<Book> books=bookDao.findAll(pageRequest);
+        return books.getContent();
     }
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
     public boolean reduceStocks(Integer id, Integer num){
-         Book book=bookRepository.getOne(id);
+         Book book= bookDao.getBookById(id);
          int inventory=book.getInventory();
          if(num>inventory) return false;
          else {
-             bookRepository.updateInventory(inventory-num,id);
+             book.setInventory(inventory-num);
+             bookDao.saveAndFlush(book);
              return true;
          }
     }
     @Override
     public void updateInventory(int inventory,int id){
-        bookRepository.updateInventory(inventory,id);
+        bookDao.updateInventory(inventory,id);
     }
 
     @Override
     public void deleteBooks(List<Book> books){
         for(int i=0;i<books.size();i++){
-            bookRepository.deleteById(books.get(i).getId());
-            bookRepository.flush();
+            bookDao.deleteById(books.get(i).getId());
+            bookDao.flush();
         }
     }
     @Override
     public void addBooks(List<Book> books){
         for(int i=0;i<books.size();i++){
-            bookRepository.saveAndFlush(books.get(i));
+            bookDao.saveAndFlush(books.get(i));
         }
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
     public void updateBooks(List<Book> books){
         for(int i=0;i<books.size();i++){
-            Book book=bookRepository.getOne(books.get(i).getId());
+            Book book= bookDao.getBookById(books.get(i).getId());
             book.setType(books.get(i).getType());
             book.setAuthor(books.get(i).getAuthor());
             book.setName(books.get(i).getName());
@@ -76,8 +76,15 @@ public class BookRepositoryImpl implements BookRepository {
             book.setInventory(books.get(i).getInventory());
             book.setIsbn(books.get(i).getIsbn());
             book.setImage(books.get(i).getImage());
-            bookRepository.save(book);
-            bookRepository.flush();
+            bookDao.save(book);
+            bookDao.flush();
         }
+    }
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public   void updateBook(Book book){
+        Book book1=bookDao.getBookById(book.getId());
+        book1.updateInfo(book);
+        bookDao.saveAndFlush(book1);
     }
 }
