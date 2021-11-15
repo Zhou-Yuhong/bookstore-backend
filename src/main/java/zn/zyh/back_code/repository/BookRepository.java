@@ -19,4 +19,5 @@ public interface BookRepository {
 
     void updateBooks(List<Book> books);
     void updateBook(Book book);
+    List<Book> getBooksByType(String type);
 }

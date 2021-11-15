@@ -4,14 +4,17 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.*;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.queries.function.valuesource.IntFieldSource;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import zn.zyh.back_code.entity.Book;
 import zn.zyh.back_code.repository.LuceneRepository;
 import zn.zyh.back_code.search.BookSearch;
 
+import javax.websocket.OnError;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,5 +75,30 @@ public class LuceneRepositoryImpl implements LuceneRepository {
             e.printStackTrace();
         }
         return null;
+    }
+    @Override
+    public void deleteBookIndex(Integer bookId){
+        try {
+            String strId = bookId.toString();
+            indexWriter.deleteDocuments(new Term("id", strId));
+            indexWriter.commit();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public void updateBookIndex(List<Book> books){
+        try{
+            for(Book it:books){
+                Integer id=it.getId();
+                Document doc = new Document();
+                doc.add(new StringField("id",id.toString(), Field.Store.YES));
+                doc.add(new TextField("description",it.getDescription(),Field.Store.NO));
+                indexWriter.updateDocument(new Term("id",id.toString()),doc);
+            }
+            indexWriter.commit();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }

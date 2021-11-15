@@ -17,4 +17,5 @@ public interface BookDao extends JpaRepository<Book,Integer> {
     @Query(value = "update Book set inventory = :inventory where id = :id")
     void updateInventory(@Param("inventory") int inventory,@Param("id") int id);
     Book getBookById(Integer id);
+    List<Book> getBooksByType(String type);
 }

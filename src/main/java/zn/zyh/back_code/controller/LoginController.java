@@ -25,14 +25,12 @@ public class LoginController {
 
     @RequestMapping(value="/login",method= RequestMethod.POST)
     public Msg login(@RequestBody Map<String,String> params){
-        System.out.print("服务器login  ");
 
         String username=params.get(Constant.USERNAME);
         String password=params.get(Constant.PASSWORD);
         UserService userService=applicationContext.getBean(UserService.class);
         UserAuth auth=userService.checkUser(username,password);
         if(auth!=null&&auth.getUserstate()==0){
-            System.out.print(auth.getUsername());
             JSONObject obj=new JSONObject();
             obj.put (Constant.USER_ID,auth.getUserId());
             obj.put(Constant.USERNAME,auth.getUsername());

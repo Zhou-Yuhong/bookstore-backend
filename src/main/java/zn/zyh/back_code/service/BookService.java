@@ -1,6 +1,7 @@
 package zn.zyh.back_code.service;
 
 import zn.zyh.back_code.entity.Book;
+import zn.zyh.back_code.entity.BookReview;
 
 import java.util.List;
 
@@ -20,4 +21,10 @@ public interface BookService {
 
     //更新书籍
     void updateBooks(List<Book> books);
+    boolean addBookReview(Integer bookId,String review);
+    void deleteBookReview(Integer bookId);
+    boolean editBookReview(Integer bookId,String BookReview);
+    BookReview getBookReview(Integer bookId);
+
+    List<Book> searchByTag(String tag);
 }

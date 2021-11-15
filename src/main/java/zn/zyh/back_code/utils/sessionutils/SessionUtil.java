@@ -11,11 +11,12 @@ import javax.servlet.http.HttpSession;
 public class SessionUtil {
     public static boolean checkAuth(){
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        System.out.print("拦截器获取的requestAttributes为"+requestAttributes);
         // Session
         if(requestAttributes != null) {
             HttpServletRequest request = requestAttributes.getRequest();
             HttpSession session = request.getSession(false);
-
+            System.out.print(session);
             if(session != null) {
                 Integer userType = (Integer) session.getAttribute(Constant.USER_TYPE);
                 return userType != null && userType >= 0;
@@ -43,6 +44,7 @@ public class SessionUtil {
     public static void setSession(JSONObject data){
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         // Session
+        System.out.print("设置session的requestAttributes:"+requestAttributes);
         if(requestAttributes != null) {
             HttpServletRequest request = requestAttributes.getRequest();
             HttpSession session = request.getSession();

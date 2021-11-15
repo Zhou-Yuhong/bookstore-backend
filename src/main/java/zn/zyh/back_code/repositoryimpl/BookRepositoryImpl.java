@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import zn.zyh.back_code.dao.BookDao;
+import zn.zyh.back_code.dao.BookReviewDao;
+import zn.zyh.back_code.entity.BookReview;
 import zn.zyh.back_code.repository.BookRepository;
 import zn.zyh.back_code.entity.Book;
 
@@ -17,6 +19,9 @@ import java.util.List;
 public class BookRepositoryImpl implements BookRepository {
     @Autowired
     private BookDao bookDao;
+
+    @Autowired
+    private BookReviewDao bookReviewDao;
 
     @Override
     public Book findOne(Integer id){
@@ -58,8 +63,16 @@ public class BookRepositoryImpl implements BookRepository {
     }
     @Override
     public void addBooks(List<Book> books){
-        for(int i=0;i<books.size();i++){
-            bookDao.saveAndFlush(books.get(i));
+//        for(int i=0;i<books.size();i++){
+//            int bookId=bookDao.saveAndFlush(books.get(i)).getId();
+//
+//        }
+        for(Book it:books){
+            int bookId=bookDao.saveAndFlush(it).getId();
+            if(it.getReview()!=null){
+                BookReview bookReview=new BookReview(bookId,it.getReview());
+                bookReviewDao.save(bookReview);
+            }
         }
     }
 
@@ -86,5 +99,9 @@ public class BookRepositoryImpl implements BookRepository {
         Book book1=bookDao.getBookById(book.getId());
         book1.updateInfo(book);
         bookDao.saveAndFlush(book1);
+    }
+    @Override
+    public List<Book> getBooksByType(String type){
+        return bookDao.getBooksByType(type);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import zn.zyh.back_code.entity.Book;
+import zn.zyh.back_code.entity.BookReview;
 import zn.zyh.back_code.producer.BookProducer;
 import zn.zyh.back_code.service.BookService;
 
@@ -81,5 +82,26 @@ public class BookController {
     public List<Book> searchBooks(@RequestBody JSONObject param){
         String word=param.getString("word");
         return bookService.searchBook(word);
+    }
+    @RequestMapping("/addBookReview")
+    public boolean addBookReview(@RequestParam("bookId")Integer bookId,@RequestParam("review") String review){
+        return bookService.addBookReview(bookId,review);
+    }
+    @RequestMapping("/deleteBookReview")
+    public boolean deleteBookReview(@RequestParam("bookId") Integer bookId){
+        bookService.deleteBookReview(bookId);
+        return true;
+    }
+    @RequestMapping("/editBookReview")
+    public boolean editBookReview(@RequestParam("bookId") Integer bookId,@RequestParam("review") String BookReview){
+        return bookService.editBookReview(bookId,BookReview);
+    }
+    @RequestMapping("/getBookReview")
+    public BookReview getBookReview(@RequestParam("bookId") Integer bookId){
+        return bookService.getBookReview(bookId);
+    }
+    @RequestMapping("/getBookByTag")
+    public List<Book> getBookReview(@RequestParam("Tag") String tag){
+        return bookService.searchByTag(tag);
     }
 }

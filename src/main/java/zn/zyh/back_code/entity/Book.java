@@ -27,6 +27,9 @@ public class Book implements Serializable {
     private String description;
     private Integer inventory;
     private String image;
+    @Transient
+    private String review;
+
     public Book(){
     };
     public Book( int id, String isbn, String name, String type, String author, BigDecimal price, String description,Integer inventory, String image){
